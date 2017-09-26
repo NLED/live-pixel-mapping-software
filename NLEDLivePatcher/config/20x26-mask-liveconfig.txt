@@ -1,0 +1,14 @@
+//ID String then single TAB(/t, NO SPACES) then data string
+PATCH	patches/26x20-mask-patch-1.txt
+INCOM#	COM28
+OUTCOM#	COM10
+INBAUD	1000000
+OUTBAUD	1000000
+PREVIEW	true
+AUTOSZ	false
+GLEDIAT	true
+AURORA	true
+WIDTH	26
+HEIGHT	20
+ORIEN	0 //0 for Glediator, 1 for Jinx!
+OUTFPS	0

@@ -1,0 +1,14 @@
+//ID String then single TAB(/t, NO SPACES) then data string
+PATCH	patches/sphere-whole-patch.txt
+INCOM#	COM28
+OUTCOM#	COM5
+INBAUD	1250000
+OUTBAUD	1000000
+PREVIEW	true
+AUTOSZ	true
+GLEDIAT	true
+AURORA	true
+WIDTH	68
+HEIGHT	24
+ORIEN	0
+OUTFPS	16

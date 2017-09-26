@@ -1,0 +1,14 @@
+//ID String then single TAB(/t) then data string
+PATCH	patches/round-matrix-22x22-patch-v4.txt
+INCOM#	COM28
+OUTCOM#	COM9
+INBAUD	1000000
+OUTBAUD	1000000
+PREVIEW	false
+AUTOSZ	true
+GLEDIAT	true
+AURORA	false
+WIDTH	22
+HEIGHT	22
+ORIEN	0
+OUTFPS	0
