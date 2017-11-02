@@ -1,0 +1,14 @@
+//ID String then single TAB(/t) then data string
+PATCH	patches/10x16-patch.txt
+INCOM#	COM28
+OUTCOM#	FILERECORD
+INBAUD	1000000
+OUTBAUD	1000000
+PREVIEW	true
+AUTOSZ	true
+GLEDIAT	true
+AURORA	true
+WIDTH	16
+HEIGHT	10
+ORIEN	0
+OUTFPS	0

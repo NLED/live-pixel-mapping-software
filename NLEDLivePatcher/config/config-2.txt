@@ -1,14 +1,14 @@
 //ID String then single TAB(/t) then data string
 PATCH	patches/4x4-simple.txt
 INCOM#	COM28
-OUTCOM#	COM9
+OUTCOM#	FILERECORD
 INBAUD	1000000
 OUTBAUD	1000000
 PREVIEW	true
-AUTOSZ	false
+AUTOSZ	true
 GLEDIAT	true
-AURORA	true
+AURORA	false
 WIDTH	4
 HEIGHT	4
 ORIEN	0
-OUTFPS	0
+OUTFPS	24

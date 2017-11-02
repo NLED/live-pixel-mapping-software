@@ -1,6 +1,9 @@
- //<>// //<>// //<>//
+ //<>//
+//================================================================================================================
+
 void LoadConfigFile()
 {
+  println("LoadConfigFile() with "+SelectedFile);
   String[] lines = loadStrings(SelectedFile); //divides the lines  
   String[] WorkString = new String[10]; //used to divide the lines into tab
   int MinX=10000;
@@ -35,6 +38,12 @@ void LoadConfigFile()
   OrientationVar = int(WorkString[1]);
   WorkString = split(lines[13], '\t'); //split line into 
   MaxOutputFPS = int(WorkString[1]);
+
+  if(OutputPortName.equals("FILERECORD"))
+  {
+    RecordToFileMode = true; //sets it to record output values to file instead of sending out COM port
+  }
+  else RecordToFileMode = false; //should already be false...
 
   //load patch file
   lines = loadStrings(patchFilePath);
@@ -72,8 +81,8 @@ void LoadConfigFile()
     println("AutoSizeEnable is false W: "+MatrixWidth+"  H: "+MatrixHeight);
   }
 
-  PatchedChannels = PixelAmount * 3;
-  TotalChannels = TotalPixels * 3; 
+  PatchedChannels = PixelAmount * 3; //3 is for RGB pixels
+  TotalChannels = TotalPixels * 3;  //3 is for RGB pixels
 
   println("PixelAmount: "+PixelAmount+"   PatchedChannels: "+PatchedChannels+"    TotalChannels: "+TotalChannels);
 
@@ -93,74 +102,49 @@ void LoadConfigFile()
     PatchCoordY[i] = int(WorkString[1]) - MinY;
   } //end for
 
+
+//Prepare GUI variables
+
+if(MatrixWidth > MatrixHeight) pixelRectSize = (width - (cPrevOffsetX*2)) / MatrixWidth;
+else  pixelRectSize = ((height-cPrevOffsetY) - (cPrevOffsetX*2)) / MatrixHeight;
+
+
+
   OpenCOMPorts();
 } //end LoadConfigFile()
 
-//===============================================================================================================
-
-void OpenCOMPorts()
-{
-  println(Serial.list()); //list COM ports
-
-  try {
-    InputPort.stop();
-    InputPort.dispose();   
-    OutputPort.stop();
-    OutputPort.dispose();
-  }
-  catch(Exception e) {
-  } 
-
-  try 
-  {
-    OutputPortNumber = OpenPort(OutputPortName);
-    OutputPort = new Serial(this, Serial.list()[OutputPortNumber], OutputBaudRate);
-    println("Opened Output Port: "+OutputPortName);
-  }
-  catch(Exception e)
-  {
-    println("Could Not Open Output COM Port: "+OutputPortName);
-    OutputPortName = "NONE";
-  }
-
-  try 
-  {
-    InputPortNumber = OpenPort(InputPortName);
-    InputPort = new Serial(this, Serial.list()[InputPortNumber], InputBaudRate);
-    println("Opened Input Port: "+InputPortName);
-  }
-  catch(Exception e)
-  {
-    println("Could Not Open Input COM Port: "+InputPortName);
-    InputPortName = "NONE";
-  }
-
-  //set to trigger serialEvent every X bytes received after data has been framed, run serialEvent for single bytes
-} //end func()
-
 //================================================================================================================
 
-int OpenPort(String NameID) //returns Serial.list() ID number
+void FileRecoderAddFrame()
 {
-  println("OpenCOMPort()");
-
-  int x = 0;
-
-  try
+  //Takes the received packet, and writes all the values as single comma delimeted line
+  //Doubt this is the most efficent way to do it
+  try 
   {
-    for (x =0; x != Serial.list().length; x++) 
+    fw = new FileWriter(SessionFileName, true); // true means: "append"
+    bw = new BufferedWriter(fw);
+    for (int i = 0; i != PatchedChannels; i++)
     {
-      if (NameID.equals(Serial.list()[x]))
-      {  
-        return x; //return port ID if matches string
+      bw.write(str(TransmissionArray[i] & 0xFF)+","); //the & 0xFF converts the signed byte to unsigned so it can be converted to a string
+    }
+    bw.newLine(); //add a new line for the next packet / frame.
+  } 
+  catch (IOException e) 
+  {
+    // Report problem or handle it
+
+  }
+  finally
+  {
+    if (bw != null)
+    {
+      try { 
+        bw.close();
+      } 
+      catch (IOException e) {
       }
     }
   }
-  catch(Exception e)
-  {
-    println("Could Not Open COM Port "+Serial.list()[x]+"as specified");
-  }
-  return 1000; //return out of bounds
-} //end func
+}
 
 //================================================================================================================

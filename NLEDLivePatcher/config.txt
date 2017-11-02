@@ -1,4 +1,8 @@
 //A single string on line 2 indicates what configuration file to load
+/config/10x16-led-panel.txt
+
+/config/config-2.txt
 /config/20x26-mask-liveconfig.txt
 /config/68x24-led-sphere-liveconfig.txt
-//can store other ones below here and move them back and fourth from to the second line as needed
+
+//can store other ones below line 2 here and move them back and fourth from to the second line as needed

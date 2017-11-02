@@ -1,10 +1,10 @@
  Original Author: Jeffrey Nygaard
  Company: Northern Lights Electronic Design, LLC
  Contact: JNygaard@NLEDShop.com
- Date Updated: October 9, 2016 
- Software Version:  1b
+ Date Updated: October 31, 2017 
+ Software Version:  1c
  Webpage: www.NLEDShop.com/nledlivepatcher
- Written in Processing v3.2.1  - www.Processing.org
+ Written in Processing v3.6  - www.Processing.org
 
 
 
@@ -13,7 +13,7 @@
 3. Follow the instructions to install the RXTX library
 	http://www.solderlab.de/index.php/software/glediator
 4. Open Glediator	
-5. Set matrix size to match the project's overall size
+5. Set matrix size to match the project's size
 6. Configure the "Output Options" as in the screenshot. 
 	- The color order may need to be adjusted to suit the project.
 	- Set serial output to the lowest com0com Port#, Set baud to 1,000,000, DO NOT OPEN YET
@@ -22,26 +22,29 @@
 8. Set the PATCH line to point towards the patch file for your project
 9. Set the INCOM line to the com0com highest COM port#, set the OUTCOM line to the LED controller's port#
 	- To find the LED controller's port number, check Device Manager for "USB Serial Device"
+	- If you are using File Recorder Mode, INCOM value will be  FILERECORDER instead of a serial port name
+	- Windows will see serial ports as "COMx", Mac and Linux will see them as /dev/ttyS0 or something of that sort. Search online for help.
 10. Use the instructions in the README to set the other configuration options if required
 11. open the config.txt in the software directory. Change the second line to /configs/YOUR-CONFIG-FILENAME.txt
 
-
 12. Start NLED Live Patcher Software, the indicator should stay red
 13. Go back to Glediator "Output Options" and click "Serial Open"
-14. The NLED Live Patcher indicator should start blinking(if enabled, press Spacebar to toggle)
+14. The NLED Live Patcher indicator should start blinking(if enabled, press Spacebar to toggle preview if not enabled through config file)
 
 Order of Usage: (Assuming everything has been installed and configured already, as above)
 1. Connect LED controller to computer
 2. Power up project
 3. Start NLED Live Patcher
-4. Start Glediator(If NLED Live Patcher is not open, Glediator will stall until it is opened)
+4. Start Glediator(If NLED Live Patcher is not open, Glediator will stall until it is opened because of com0com)
 5. In Glediator "Output Options" click "Serial Open"
-6. Should start running.
+6. It all should start running if configured properly.
+
 
 Notes:
 
-If AURORA mode is true, it sends the command to open Live Mode only at software start up. Software may need 
+If AURORA mode is true, it sends the command to open Live Mode only at software start up. Software needs
 	to be restarted if connection is lost.
+	
 	
 com0com will stall/freeze Glediator if both of it's ports are not open. The IN and OUT com0com ports must both be open.
 	Example: Glediator is open with "Serial Open" enabled. NLED Live Patcher is then closed, Glediator will freeze until
